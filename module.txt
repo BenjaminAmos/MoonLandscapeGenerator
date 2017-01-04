@@ -1,0 +1,9 @@
+{
+    "id" : "MoonLandscapeGenerator",
+    "version" : "0.1.0-SNAPSHOT",
+    "author" : "",
+    "displayName" : "MoonLandscapeGenerator",
+    "description" : "",
+    "dependencies" : [],
+    "serverSideOnly" : false
+}
