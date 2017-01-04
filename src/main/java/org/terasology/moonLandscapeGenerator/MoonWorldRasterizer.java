@@ -28,13 +28,17 @@ import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
 public class MoonWorldRasterizer implements WorldRasterizer {
     private Block stone;
-    private Block ore;
+    private Block ironOre;
+    private Block copperOre;
+    private Block diamondOre;
     private FastRandom chance;
 
     @Override
     public void initialize() {
         stone = CoreRegistry.get(BlockManager.class).getBlock("Core:Stone");
-        ore = CoreRegistry.get(BlockManager.class).getBlock("Core:IronOre");
+        ironOre = CoreRegistry.get(BlockManager.class).getBlock("Core:IronOre");
+        copperOre = CoreRegistry.get(BlockManager.class).getBlock("Core:CopperOre");
+        diamondOre = CoreRegistry.get(BlockManager.class).getBlock("Core:DiamondOre");
 
         chance = new FastRandom(547846885);
     }
@@ -46,10 +50,18 @@ public class MoonWorldRasterizer implements WorldRasterizer {
             float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
 
             if (position.y < surfaceHeight - 1 && chance.nextBoolean()) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), ore);
+                chunk.setBlock(ChunkMath.calcBlockPos(position), copperOre);
             } else {
-                if (position.y < surfaceHeight) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
+                if (position.y < surfaceHeight - 2 && chance.nextBoolean() && chance.nextBoolean()) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(position), ironOre);
+                } else {
+                    if (position.y < surfaceHeight - 4 && chance.nextBoolean() && chance.nextBoolean() && chance.nextBoolean() && chance.nextBoolean()) {
+                        chunk.setBlock(ChunkMath.calcBlockPos(position), diamondOre);
+                    } else {
+                        if (position.y < surfaceHeight) {
+                            chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
+                        }
+                    }
                 }
             }
         }
