@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.moonLandscapeGenerator;
+package org.terasology.moonLandscapeGenerator.generator;
 
 import org.terasology.math.ChunkMath;
 import org.terasology.math.geom.Vector3i;
@@ -26,6 +26,9 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
+/*
+* This is the rasterizer for the MoonWorld generator
+*/
 public class MoonWorldRasterizer implements WorldRasterizer {
     private Block stone;
     private Block ironOre;
@@ -43,6 +46,10 @@ public class MoonWorldRasterizer implements WorldRasterizer {
         chance = new FastRandom(547846885);
     }
 
+
+    /*
+    * This is where the blocks are placed
+    */
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);

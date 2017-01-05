@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.moonLandscapeGenerator;
+package org.terasology.moonLandscapeGenerator.generator;
 
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.engine.SimpleUri;
+import org.terasology.moonLandscapeGenerator.data.EnableLowGravity;
+import org.terasology.registry.CoreRegistry;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
 import org.terasology.world.generation.WorldBuilder;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 
+/**
+* This is a generator for a moon world
+*/
 @RegisterWorldGenerator(displayName = "Moon World", id = "MoonWorld", description = "This generator generates a moon world.")
 public class MoonWorldGenerator extends BaseFacetedWorldGenerator {
     @In
@@ -32,8 +37,18 @@ public class MoonWorldGenerator extends BaseFacetedWorldGenerator {
         super(uri);
     }
 
+    /**
+    * This creates the world
+    */
     @Override
     protected WorldBuilder createWorld() {
-        return new WorldBuilder(worldGeneratorPluginLibrary).addProvider(new MoonSurfaceProvider()).addProvider(new SeaLevelProvider(0)).addRasterizer(new MoonWorldRasterizer());
+        //Tell the world to use low gravity
+        CoreRegistry.put(EnableLowGravity.class, new EnableLowGravity(true));
+
+        //Create a new world and add the required providers and rasterizer
+        return new WorldBuilder(worldGeneratorPluginLibrary)
+                .addProvider(new MoonSurfaceProvider())
+                .addProvider(new SeaLevelProvider(0))
+                .addRasterizer(new MoonWorldRasterizer());
     }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.moonLandscapeGenerator;
+package org.terasology.moonLandscapeGenerator.generator;
 
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
@@ -27,16 +27,28 @@ import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
+/**
+* This controls the height for the moon terrain using noise
+*/
 @Produces(SurfaceHeightFacet.class)
 public class MoonSurfaceProvider implements FacetProvider {
 
+    /**
+    * This is for generating noise
+    */
     private Noise surfaceNoise;
 
+    /**
+    * This sets the seed for the terrain
+     */
     @Override
     public void setSeed(long seed) {
         surfaceNoise = new SubSampledNoise(new SimplexNoise(seed), new Vector2f(0.01f, 0.01f), 1);
     }
 
+    /**
+    * This creates the terrain heights
+     */
     @Override
     public void process(GeneratingRegion region) {
         Border3D border = region.getBorderForFacet(SurfaceHeightFacet.class);
