@@ -17,6 +17,6 @@ package org.terasology.moonLandscapeGenerator.generator.data;
 
 public class MineShaft {
     public int getExtent() {
-        return 4;
+        return 40;
     }
 }

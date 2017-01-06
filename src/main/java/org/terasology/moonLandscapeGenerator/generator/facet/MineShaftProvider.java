@@ -41,7 +41,7 @@ public class MineShaftProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
 
-        Border3D border = region.getBorderForFacet(MineShaftFacet.class).extendBy(0, 8, 4);
+        Border3D border = region.getBorderForFacet(MineShaftFacet.class).extendBy(0, 40, 4);
         MineShaftFacet facet = new MineShaftFacet(region.getRegion(), border);
         SurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
 
@@ -71,10 +71,10 @@ public class MineShaftProvider implements FacetProvider {
                     }
 
                     // TODO: check for overlap
-                    if ((surfaceHeight - 6) > facet.getWorldRegion().minY()
+                    if ((surfaceHeight - 60) > facet.getWorldRegion().minY()
                             && noise.noise(wx, wz) > 0.99
                             && placeMineShaft) {
-                        facet.setWorld(wx, surfaceHeight - 6, wz, new MineShaft());
+                        facet.setWorld(wx, surfaceHeight - 60, wz, new MineShaft());
                     }
                 }
             }
