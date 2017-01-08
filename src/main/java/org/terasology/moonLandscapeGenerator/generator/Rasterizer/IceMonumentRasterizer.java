@@ -17,52 +17,65 @@ package org.terasology.moonLandscapeGenerator.generator.Rasterizer;
 
 import org.terasology.math.ChunkMath;
 import org.terasology.math.Region3i;
+import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.BaseVector3i;
 import org.terasology.math.geom.Vector3i;
+import org.terasology.moonLandscapeGenerator.generator.data.IceMonument;
 import org.terasology.moonLandscapeGenerator.generator.data.MineShaft;
+import org.terasology.moonLandscapeGenerator.generator.facet.IceMonumentFacet;
 import org.terasology.moonLandscapeGenerator.generator.facet.MineShaftFacet;
 import org.terasology.registry.CoreRegistry;
+import org.terasology.utilities.random.FastRandom;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
+import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
-public class MineShaftRasterizer implements WorldRasterizer {
-    private Block brick;
-    private Block glass;
+/*
+* This is the rasterizer for the MoonWorld generator
+*/
+public class IceMonumentRasterizer implements WorldRasterizer {
+    private Block ice;
+    private Block gold;
+    private FastRandom chance;
 
     @Override
     public void initialize() {
-        brick = CoreRegistry.get(BlockManager.class).getBlock("Core:Brick");
-        glass = CoreRegistry.get(BlockManager.class).getBlock("Core:Glass");
+        ice = CoreRegistry.get(BlockManager.class).getBlock("Core:Ice");
+        gold = CoreRegistry.get(BlockManager.class).getBlock("Core:GoldOre");
+
+        chance = new FastRandom(547846885);
     }
 
+
+    /*
+    * This is where the blocks are placed
+    */
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
-        MineShaftFacet shaftFacet = chunkRegion.getFacet(MineShaftFacet.class);
+        IceMonumentFacet monumentFacet = chunkRegion.getFacet(IceMonumentFacet.class);
 
-        for (Entry<BaseVector3i, MineShaft> entry : shaftFacet.getWorldEntries().entrySet()) {
+        for (Map.Entry<BaseVector3i, IceMonument> entry : monumentFacet.getWorldEntries().entrySet()) {
             // there should be a mine shaft here
             // create a couple 3d regions to help iterate through the cube shape, inside and out
-            Vector3i centerShaftPosition = new Vector3i(entry.getKey());
+            Vector3i centerPosition = new Vector3i(entry.getKey());
             int extent = entry.getValue().getExtent();
-            centerShaftPosition.add(0, extent, 0);
-            Region3i walls = Region3i.createFromCenterExtents(centerShaftPosition, extent);
-            Region3i inside = Region3i.createFromCenterExtents(centerShaftPosition, extent - 1);
+            centerPosition.add(0, extent, 0);
+            Region3i walls = Region3i.createFromCenterExtents(centerPosition, extent);
 
             // loop through each of the positions in the cube, ignoring the is
             for (Vector3i newBlockPosition : walls) {
-                if (chunkRegion.getRegion().encompasses(newBlockPosition) && inside.encompasses(newBlockPosition) && newBlockPosition.x == centerShaftPosition.x && newBlockPosition.z == centerShaftPosition.z) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), glass);
+                if (chunkRegion.getRegion().encompasses(newBlockPosition) && newBlockPosition.x == centerPosition.x && newBlockPosition.z == centerPosition.z && newBlockPosition.y == centerPosition.y) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), gold);
                     continue;
                 }
 
-                if (chunkRegion.getRegion().encompasses(newBlockPosition)
-                        && !inside.encompasses(newBlockPosition)) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), brick);
+                if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), ice);
                 }
             }
         }

@@ -15,9 +15,7 @@
  */
 package org.terasology.moonLandscapeGenerator.generator;
 
-import org.terasology.math.geom.BaseVector2i;
-import org.terasology.math.geom.Rect2i;
-import org.terasology.math.geom.Vector2f;
+import org.terasology.math.geom.*;
 import org.terasology.utilities.procedural.*;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.FacetProvider;
@@ -37,11 +35,17 @@ public class MoonSurfaceProvider implements FacetProvider {
     private Noise surfaceNoise;
 
     /**
+     * This is for generating noise
+     */
+    private Noise craterNoise;
+
+    /**
     * This sets the seed for the terrain
      */
     @Override
     public void setSeed(long seed) {
         surfaceNoise = new SubSampledNoise(new PerlinNoise(seed), new Vector2f(0.01f, 0.01f), 1);
+        craterNoise = new SubSampledNoise(new SimplexNoise((int)seed), new Vector2f(0.01f, 0.01f), 1);
     }
 
     /**
@@ -54,7 +58,10 @@ public class MoonSurfaceProvider implements FacetProvider {
 
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position : processRegion.contents()) {
-            facet.setWorld(position, surfaceNoise.noise(position.x(), position.y()) * 20);
+            float noiseResult = surfaceNoise.noise(position.x(), position.y());
+            float craterResult = craterNoise.noise(position.x(), position.y());
+
+            facet.setWorld(position, noiseResult * 20);
         }
 
         region.setRegionFacet(SurfaceHeightFacet.class, facet);

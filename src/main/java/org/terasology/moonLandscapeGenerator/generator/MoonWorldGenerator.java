@@ -18,8 +18,10 @@ package org.terasology.moonLandscapeGenerator.generator;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.engine.SimpleUri;
 import org.terasology.moonLandscapeGenerator.data.EnableLowGravity;
+import org.terasology.moonLandscapeGenerator.generator.Rasterizer.IceMonumentRasterizer;
 import org.terasology.moonLandscapeGenerator.generator.Rasterizer.MineShaftRasterizer;
 import org.terasology.moonLandscapeGenerator.generator.Rasterizer.MoonWorldRasterizer;
+import org.terasology.moonLandscapeGenerator.generator.facet.IceMonumentProvider;
 import org.terasology.moonLandscapeGenerator.generator.facet.MineShaftProvider;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.registry.In;
@@ -53,7 +55,9 @@ public class MoonWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new MoonSurfaceProvider())
                 .addProvider(new SeaLevelProvider(0))
                 .addProvider(new MineShaftProvider())
+                .addProvider(new IceMonumentProvider())
                 .addRasterizer(new MoonWorldRasterizer())
-                .addRasterizer(new MineShaftRasterizer());
+                .addRasterizer(new MineShaftRasterizer())
+                .addRasterizer(new IceMonumentRasterizer());
     }
 }

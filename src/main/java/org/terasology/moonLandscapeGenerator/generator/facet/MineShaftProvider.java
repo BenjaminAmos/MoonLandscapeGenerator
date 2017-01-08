@@ -55,20 +55,17 @@ public class MineShaftProvider implements FacetProvider {
                 if (surfaceHeight >= facet.getWorldRegion().minY()
                         && surfaceHeight <= facet.getWorldRegion().maxY()) {
 
-                    boolean placeMineShaft = false;
-                    boolean previousValue = false;
+                    boolean placeMineShaft = true;
 
-                    for (int i = 0; i < 20; i++) {
+                    /*(for (int i = 0; i < 1; i++) {
                         placeMineShaft = random.nextBoolean();
-                        previousValue = placeMineShaft;
-
-                        if (previousValue && placeMineShaft) {
+                        if (placeMineShaft) {
                             placeMineShaft = true;
-                        }
-                        else {
+                        } else {
                             placeMineShaft = false;
+                            break;
                         }
-                    }
+                    }*/
 
                     // TODO: check for overlap
                     if ((surfaceHeight - 60) > facet.getWorldRegion().minY()

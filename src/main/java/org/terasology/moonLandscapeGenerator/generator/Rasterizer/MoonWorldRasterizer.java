@@ -34,6 +34,7 @@ public class MoonWorldRasterizer implements WorldRasterizer {
     private Block ironOre;
     private Block copperOre;
     private Block diamondOre;
+    private Block air;
     private FastRandom chance;
 
     @Override
@@ -42,6 +43,7 @@ public class MoonWorldRasterizer implements WorldRasterizer {
         ironOre = CoreRegistry.get(BlockManager.class).getBlock("Core:IronOre");
         copperOre = CoreRegistry.get(BlockManager.class).getBlock("Core:CopperOre");
         diamondOre = CoreRegistry.get(BlockManager.class).getBlock("Core:DiamondOre");
+        air = CoreRegistry.get(BlockManager.class).getBlock(BlockManager.AIR_ID);
 
         chance = new FastRandom(547846885);
     }
