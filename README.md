@@ -14,3 +14,10 @@ Abandoned mine shafts:
   ![DiamondInShaft.jpg](https://raw.githubusercontent.com/BenjaminAmos/MoonLandscapeGenerator/Images/Images/DiamondInShaft.jpg)
   ![BottomOfShaft.jpg](https://raw.githubusercontent.com/BenjaminAmos/MoonLandscapeGenerator/Images/Images/BottomOfShaft.jpg)
   At the bottom of the shafts, there is an increased chance of finding diamond ore (as it is so deep) but it will be a challenge to get back out again.
+
+Ice Monuments:
+  ![IceLandmarks.jpg](https://raw.githubusercontent.com/BenjaminAmos/MoonLandscapeGenerator/Images/Images/IceLandmarks.jpg)
+  These monuments mark the starting point of the map and will help to always find your way back.
+ 
+Small underground lakes:
+  This feature creates small water patches underground and is currently disabled for performance reasons.
