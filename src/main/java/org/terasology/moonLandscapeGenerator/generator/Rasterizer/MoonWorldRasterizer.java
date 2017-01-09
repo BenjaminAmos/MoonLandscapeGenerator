@@ -34,16 +34,18 @@ public class MoonWorldRasterizer implements WorldRasterizer {
     private Block ironOre;
     private Block copperOre;
     private Block diamondOre;
-    private Block air;
+    private Block water;
     private FastRandom chance;
 
     @Override
     public void initialize() {
-        stone = CoreRegistry.get(BlockManager.class).getBlock("Core:Stone");
-        ironOre = CoreRegistry.get(BlockManager.class).getBlock("Core:IronOre");
-        copperOre = CoreRegistry.get(BlockManager.class).getBlock("Core:CopperOre");
-        diamondOre = CoreRegistry.get(BlockManager.class).getBlock("Core:DiamondOre");
-        air = CoreRegistry.get(BlockManager.class).getBlock(BlockManager.AIR_ID);
+        BlockManager blockManager = CoreRegistry.get(BlockManager.class);
+
+        stone = blockManager.getBlock("Core:Stone");
+        ironOre = blockManager.getBlock("Core:IronOre");
+        copperOre = blockManager.getBlock("Core:CopperOre");
+        diamondOre = blockManager.getBlock("Core:DiamondOre");
+        water = blockManager.getBlock("Core:Water");
 
         chance = new FastRandom(547846885);
     }
@@ -64,11 +66,15 @@ public class MoonWorldRasterizer implements WorldRasterizer {
                 if (position.y < surfaceHeight - 2 && chance.nextBoolean() && chance.nextBoolean()) {
                     chunk.setBlock(ChunkMath.calcBlockPos(position), ironOre);
                 } else {
-                    if (position.y < surfaceHeight - 4 && chance.nextBoolean() && chance.nextBoolean() && chance.nextBoolean() && chance.nextBoolean()) {
-                        chunk.setBlock(ChunkMath.calcBlockPos(position), diamondOre);
+                    if (position.y < surfaceHeight - 3 && chance.nextBoolean() & chance.nextBoolean() && chance.nextBoolean()) {
+                        /** <!--chunk.setBlock(ChunkMath.calcBlockPos(position), water);--> */
                     } else {
-                        if (position.y < surfaceHeight) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
+                        if (position.y < surfaceHeight - 4 && chance.nextBoolean() && chance.nextBoolean() && chance.nextBoolean() && chance.nextBoolean()) {
+                            chunk.setBlock(ChunkMath.calcBlockPos(position), diamondOre);
+                        } else {
+                            if (position.y < surfaceHeight) {
+                                chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
+                            }
                         }
                     }
                 }
