@@ -20,4 +20,4 @@ Ice Monuments:
   These monuments mark the starting point of the map and will help to always find your way back.
  
 Small underground lakes:
-  This feature creates small water patches underground and is currently disabled for performance reasons.
+  This feature creates small water patches underground and are currently disabled for performance reasons. The performance hit was so severe that there could be no screenshots taken.
